@@ -24,6 +24,7 @@ import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
 
+
     @FXML
     LineChart<Number, Number> input1LineChart;
     @FXML
@@ -56,12 +57,15 @@ public class Controller implements Initializable {
     private NumberAxis xAxisLC3;
     @FXML
     private NumberAxis xAxisLC4;
+    @FXML
+    private NumberAxis xAxisLCOut;
 
     XYChart.Series s1 = new XYChart.Series<Number, Number>();
 
     XYChart.Series s2 = new XYChart.Series<Number, Number>();
     XYChart.Series s3 = new XYChart.Series<Number, Number>();
     XYChart.Series s4 = new XYChart.Series<Number, Number>();
+    XYChart.Series sOut = new XYChart.Series<Number, Number>();
     private Timeline animation;
 
     private double sequence = 0;
@@ -69,6 +73,8 @@ public class Controller implements Initializable {
     private double y = 10;
 
     private final int MAX_DATA_POINTS = 30, MAX = 1, MIN = 0;
+
+    int[] tab = new int[4];
 
     public Controller() {
 
@@ -81,6 +87,7 @@ public class Controller implements Initializable {
         xAxisLC2 = new NumberAxis(0, MAX_DATA_POINTS + 1, 2);
         xAxisLC3 = new NumberAxis(0, MAX_DATA_POINTS + 1, 2);
         xAxisLC4 = new NumberAxis(0, MAX_DATA_POINTS + 1, 2);
+        xAxisLCOut = new NumberAxis(0, MAX_DATA_POINTS + 1, 2);
         final NumberAxis yAxis = new NumberAxis(MIN - 1, MAX + 1, 1);
 
         // setup chart
@@ -96,11 +103,16 @@ public class Controller implements Initializable {
         input4LineChart.setAnimated(true);
         input4LineChart.setLegendVisible(false);
 
+        // setup chart
+        outputLineChart.setAnimated(true);
+        outputLineChart.setLegendVisible(false);
+
         // xAxisLC1.setLabel("X Axis");
         xAxisLC1.setForceZeroInRange(false);
         xAxisLC2.setForceZeroInRange(false);
         xAxisLC3.setForceZeroInRange(false);
         xAxisLC4.setForceZeroInRange(false);
+        xAxisLCOut.setForceZeroInRange(false);
 
         yAxis.setLabel("Y Axis");
         yAxis.setTickLabelFormatter(new NumberAxis.DefaultFormatter(yAxis, "$", null));
@@ -110,6 +122,7 @@ public class Controller implements Initializable {
         s2.getData().add(new XYChart.Data<Number, Number>(sequence, y));
         s3.getData().add(new XYChart.Data<Number, Number>(sequence, y));
         s4.getData().add(new XYChart.Data<Number, Number>(sequence, y));
+        sOut.getData().add(new XYChart.Data<Number, Number>(sequence, y));
 
         // create some starting data
         input1LineChart.getData()
@@ -121,13 +134,24 @@ public class Controller implements Initializable {
         input4LineChart.getData()
                 .add(s4);
 
+        outputLineChart.getData()
+                .add(sOut);
+
+
     }
 
+
     private void plotTime() {
-        s1.getData().add(new XYChart.Data<Number, Number>(sequence, getNextValue()));
-        s2.getData().add(new XYChart.Data<Number, Number>(sequence, getNextValue()));
-        s3.getData().add(new XYChart.Data<Number, Number>(sequence, getNextValue()));
-        s4.getData().add(new XYChart.Data<Number, Number>(sequence, getNextValue()));
+        tab[0] = getNextValue();
+        tab[1] = getNextValue();
+        tab[2] = getNextValue();
+        tab[3] = getNextValue();
+        s1.getData().add(new XYChart.Data<Number, Number>(sequence, tab[0]));
+
+        s2.getData().add(new XYChart.Data<Number, Number>(sequence, tab[1]));
+        s3.getData().add(new XYChart.Data<Number, Number>(sequence, tab[2]));
+        s4.getData().add(new XYChart.Data<Number, Number>(sequence, tab[3]));
+        sOut.getData().add(new XYChart.Data<Number, Number>(sequence, tab[3] + tab[0] + tab[1] + tab[2]));
 
         sequence++;
 
@@ -149,6 +173,9 @@ public class Controller implements Initializable {
 
             xAxisLC4.setLowerBound(xAxisLC4.getLowerBound() + 1);
             xAxisLC4.setUpperBound(xAxisLC4.getUpperBound() + 1);
+
+            xAxisLCOut.setLowerBound(xAxisLCOut.getLowerBound() + 1);
+            xAxisLCOut.setUpperBound(xAxisLCOut.getUpperBound() + 1);
         }
     }
 
