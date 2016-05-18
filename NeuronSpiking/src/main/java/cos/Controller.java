@@ -11,6 +11,10 @@ import java.util.ResourceBundle;
 /**
  * Created by Tadzik on 2016-05-16.
  */
+
+////////////////
+    /////////
+    
 public class Controller implements Initializable {
 
     @FXML
