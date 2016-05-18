@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.chart.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="583.0" prefWidth="707.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tk.Controller">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="583.0" prefWidth="894.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tk.Controller">
    <children>
       <LineChart fx:id="input1LineChart" layoutX="14.0" layoutY="285.0" minHeight="100.0" minWidth="150.0" prefHeight="133.0" prefWidth="213.0">
         <xAxis>
@@ -17,15 +20,15 @@
       </LineChart>
       <LineChart fx:id="input2LineChart" layoutX="14.0" layoutY="418.0" minHeight="100.0" minWidth="150.0" prefHeight="133.0" prefWidth="213.0">
         <xAxis>
-          <NumberAxis fx:id="xAxisLC2" side="BOTTOM" />
+          <NumberAxis side="BOTTOM" fx:id="xAxisLC2" />
         </xAxis>
         <yAxis>
           <NumberAxis side="LEFT" />
         </yAxis>
       </LineChart>
-      <LineChart fx:id="outputLineChart" layoutX="346.0" layoutY="143.0" prefHeight="216.0" prefWidth="310.0">
+      <LineChart fx:id="outputLineChart" layoutX="581.0" layoutY="184.0" prefHeight="216.0" prefWidth="280.0">
         <xAxis>
-          <NumberAxis fx:id="xAxisLCOut" side="BOTTOM" />
+          <NumberAxis side="BOTTOM" fx:id="xAxisLCOut" />
         </xAxis>
         <yAxis>
           <NumberAxis side="LEFT" />
@@ -33,7 +36,7 @@
       </LineChart>
       <LineChart fx:id="input4LineChart" layoutX="14.0" layoutY="166.0" minHeight="100.0" minWidth="150.0" prefHeight="119.0" prefWidth="213.0">
          <xAxis>
-            <NumberAxis fx:id="xAxisLC4" side="BOTTOM" />
+            <NumberAxis side="BOTTOM" fx:id="xAxisLC4" />
          </xAxis>
          <yAxis>
             <NumberAxis side="LEFT" />
@@ -41,11 +44,19 @@
       </LineChart>
       <LineChart fx:id="input3LineChart" layoutX="14.0" layoutY="33.0" minHeight="100.0" minWidth="150.0" prefHeight="133.0" prefWidth="213.0">
          <xAxis>
-            <NumberAxis fx:id="xAxisLC3" side="BOTTOM" />
+            <NumberAxis side="BOTTOM" fx:id="xAxisLC3" />
          </xAxis>
          <yAxis>
             <NumberAxis side="LEFT" />
          </yAxis>
       </LineChart>
+      <Circle fill="DODGERBLUE" layoutX="467.0" layoutY="285.0" radius="66.0" stroke="BLACK" strokeType="INSIDE" />
+      <Line endX="100.0" layoutX="328.0" layoutY="160.0" rotate="35.0" startX="-100.0" />
+      <Line endX="80.0" layoutX="321.0" layoutY="227.0" rotate="15.0" startX="-100.0" />
+      <Line endX="75.0" layoutX="324.0" layoutY="320.0" rotate="-15.0" startX="-100.0" />
+      <Line endX="110.0" layoutX="324.0" layoutY="410.0" rotate="-35.0" startX="-100.0" />
+      <Label layoutX="427.0" layoutY="277.0" prefHeight="0.0" prefWidth="67.0" text="Neuron" />
+      <Text layoutX="541.0" layoutY="282.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Wyjście" />
+      <Line layoutX="581.0" layoutY="292.0" startX="-50.0" />
    </children>
 </Pane>

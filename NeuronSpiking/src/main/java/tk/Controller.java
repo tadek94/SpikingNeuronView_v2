@@ -181,7 +181,7 @@ public class Controller implements Initializable {
 
     private int getNextValue() {
         Random rand = new Random();
-        return rand.nextInt(2) * 10;
+        return rand.nextInt(5) * 10;
     }
 
     public void play() {
