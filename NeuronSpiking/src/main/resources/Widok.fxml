@@ -5,43 +5,43 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="477.0" prefWidth="625.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cos.Controller">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="583.0" prefWidth="707.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tk.Controller">
    <children>
-      <LineChart fx:id="input1LineChart" layoutX="22.0" layoutY="239.0" minHeight="100.0" minWidth="150.0" prefHeight="100.0" prefWidth="129.0">
+      <LineChart fx:id="input1LineChart" layoutX="14.0" layoutY="285.0" minHeight="100.0" minWidth="150.0" prefHeight="133.0" prefWidth="213.0">
         <xAxis>
-          <CategoryAxis side="BOTTOM" />
+          <NumberAxis side="BOTTOM" fx:id="xAxisLC1" />
         </xAxis>
         <yAxis>
           <NumberAxis side="LEFT" />
         </yAxis>
       </LineChart>
-      <LineChart layoutX="22.0" layoutY="347.0" minHeight="100.0" minWidth="150.0" prefHeight="83.0" prefWidth="150.0">
+      <LineChart fx:id="input2LineChart" layoutX="14.0" layoutY="418.0" minHeight="100.0" minWidth="150.0" prefHeight="133.0" prefWidth="213.0">
         <xAxis>
-          <CategoryAxis side="BOTTOM" />
+          <NumberAxis fx:id="xAxisLC2" side="BOTTOM" />
         </xAxis>
         <yAxis>
           <NumberAxis side="LEFT" />
         </yAxis>
       </LineChart>
-      <LineChart layoutX="294.0" layoutY="143.0" prefHeight="216.0" prefWidth="310.0">
+      <LineChart fx:id="outputLineChart" layoutX="346.0" layoutY="143.0" prefHeight="216.0" prefWidth="310.0">
         <xAxis>
-          <CategoryAxis side="BOTTOM" />
+          <NumberAxis fx:id="xAxisLCOut" side="BOTTOM" />
         </xAxis>
         <yAxis>
           <NumberAxis side="LEFT" />
         </yAxis>
       </LineChart>
-      <LineChart layoutX="22.0" layoutY="143.0" minHeight="100.0" minWidth="150.0" prefHeight="100.0" prefWidth="129.0">
+      <LineChart fx:id="input4LineChart" layoutX="14.0" layoutY="166.0" minHeight="100.0" minWidth="150.0" prefHeight="119.0" prefWidth="213.0">
          <xAxis>
-            <CategoryAxis side="BOTTOM" />
+            <NumberAxis fx:id="xAxisLC4" side="BOTTOM" />
          </xAxis>
          <yAxis>
             <NumberAxis side="LEFT" />
          </yAxis>
       </LineChart>
-      <LineChart layoutX="22.0" layoutY="43.0" minHeight="100.0" minWidth="150.0" prefHeight="100.0" prefWidth="129.0">
+      <LineChart fx:id="input3LineChart" layoutX="14.0" layoutY="33.0" minHeight="100.0" minWidth="150.0" prefHeight="133.0" prefWidth="213.0">
          <xAxis>
-            <CategoryAxis side="BOTTOM" />
+            <NumberAxis fx:id="xAxisLC3" side="BOTTOM" />
          </xAxis>
          <yAxis>
             <NumberAxis side="LEFT" />
