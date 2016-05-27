@@ -9,6 +9,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.ToggleGroup;
 import javafx.util.Duration;
 
 import java.net.URL;
@@ -23,6 +25,14 @@ import java.util.ResourceBundle;
 /////////
 
 public class Controller implements Initializable {
+
+    @FXML
+    RadioButton radioNormalnie;
+
+    @FXML
+    RadioButton radioCzesto;
+
+
 
 
     @FXML
@@ -73,6 +83,10 @@ public class Controller implements Initializable {
     private double y = 0;
 
     private final int MAX_DATA_POINTS = 30, MAX = 1, MIN = 0;
+
+    int[] tabDoLosowaniaCzesto = new int[4];
+    int[] tabDoLosowaniaNormalnie = new int[4];
+
 
     int[] impulsTab = new int[4]; // tablica z wylosowanymi impulsami 0 lub 1
     float[] waga = new float[4];
@@ -144,10 +158,10 @@ public class Controller implements Initializable {
 
 
     private void plotTime() {
-        impulsTab[0] = getNextValue();
-        impulsTab[1] = getNextValue();
-        impulsTab[2] = getNextValue();
-        impulsTab[3] = getNextValue();
+        impulsTab[0] = getWartImpulsu();
+        impulsTab[1] = getWartImpulsu();
+        impulsTab[2] = getWartImpulsu();
+        impulsTab[3] = getWartImpulsu();
 
         waga[0] = getNextWag();
         waga[1] = getNextWag();
@@ -188,7 +202,36 @@ public class Controller implements Initializable {
 
     private int getNextValue() {
         Random rand = new Random();
-        return rand.nextInt(2);
+        return rand.nextInt(4);
+    }
+
+    private int getWartImpulsu(){
+        int wynik;
+        final ToggleGroup group = new ToggleGroup();
+        radioCzesto.setToggleGroup(group);
+        radioNormalnie.setToggleGroup(group);
+        tabDoLosowaniaNormalnie[0] = 0;
+        tabDoLosowaniaNormalnie[1] = 0;
+        tabDoLosowaniaNormalnie[2] = 1;
+        tabDoLosowaniaNormalnie[3] = 1;
+
+        tabDoLosowaniaCzesto[0] = 0;
+        tabDoLosowaniaCzesto[1] =1;
+        tabDoLosowaniaCzesto[2] =1;
+        tabDoLosowaniaCzesto[3] =1;
+
+
+
+        if(radioNormalnie.isSelected())
+        {
+            wynik = tabDoLosowaniaNormalnie[getNextValue()];
+            return wynik;
+        }
+        else
+        {
+            wynik = tabDoLosowaniaCzesto[getNextValue()];
+            return wynik;
+        }
     }
 
     private float getNextWag(){
