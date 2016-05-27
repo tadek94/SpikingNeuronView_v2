@@ -212,8 +212,8 @@ public class Controller implements Initializable {
         radioNormalnie.setToggleGroup(group);
         tabDoLosowaniaNormalnie[0] = 0;
         tabDoLosowaniaNormalnie[1] = 0;
-        tabDoLosowaniaNormalnie[2] = 1;
-        tabDoLosowaniaNormalnie[3] = 1;
+        tabDoLosowaniaNormalnie[2] = 0;
+        tabDoLosowaniaNormalnie[3] = 0;
 
         tabDoLosowaniaCzesto[0] = 0;
         tabDoLosowaniaCzesto[1] =1;

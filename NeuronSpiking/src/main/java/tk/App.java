@@ -15,7 +15,7 @@ public class App extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
             Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("Widok.fxml"));
-            Scene scene = new Scene(root, 900, 600);
+            Scene scene = new Scene(root, 1000, 600);
             primaryStage.setScene(scene);
             primaryStage.setTitle("Neuron");
             primaryStage.show();
