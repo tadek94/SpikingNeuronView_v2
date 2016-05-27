@@ -70,11 +70,13 @@ public class Controller implements Initializable {
 
     private double sequence = 0;
 
-    private double y = 10;
+    private double y = 0;
 
     private final int MAX_DATA_POINTS = 30, MAX = 1, MIN = 0;
 
-    int[] tab = new int[4];
+    int[] impulsTab = new int[4]; // tablica z wylosowanymi impulsami 0 lub 1
+    float[] waga = new float[4];
+
 
     public Controller() {
 
@@ -142,16 +144,21 @@ public class Controller implements Initializable {
 
 
     private void plotTime() {
-        tab[0] = getNextValue();
-        tab[1] = getNextValue();
-        tab[2] = getNextValue();
-        tab[3] = getNextValue();
-        s1.getData().add(new XYChart.Data<Number, Number>(sequence, tab[0]));
+        impulsTab[0] = getNextValue();
+        impulsTab[1] = getNextValue();
+        impulsTab[2] = getNextValue();
+        impulsTab[3] = getNextValue();
 
-        s2.getData().add(new XYChart.Data<Number, Number>(sequence, tab[1]));
-        s3.getData().add(new XYChart.Data<Number, Number>(sequence, tab[2]));
-        s4.getData().add(new XYChart.Data<Number, Number>(sequence, tab[3]));
-        sOut.getData().add(new XYChart.Data<Number, Number>(sequence, tab[3] + tab[0] + tab[1] + tab[2]));
+        waga[0] = getNextWag();
+        waga[1] = getNextWag();
+        waga[2] = getNextWag();
+        waga[3] = getNextWag();
+        s1.getData().add(new XYChart.Data<Number, Number>(sequence, (impulsTab[0]*waga[0])));
+
+        s2.getData().add(new XYChart.Data<Number, Number>(sequence, (impulsTab[1]*waga[1])));
+        s3.getData().add(new XYChart.Data<Number, Number>(sequence, (impulsTab[2]*waga[2])));
+        s4.getData().add(new XYChart.Data<Number, Number>(sequence, (impulsTab[3]*waga[3])));
+        sOut.getData().add(new XYChart.Data<Number, Number>(sequence, waga[3] + waga[0] + waga[1] + waga[2]));
 
         sequence++;
 
@@ -181,7 +188,12 @@ public class Controller implements Initializable {
 
     private int getNextValue() {
         Random rand = new Random();
-        return rand.nextInt(5) * 10;
+        return rand.nextInt(2);
+    }
+
+    private float getNextWag(){
+        Random rand = new Random();
+        return rand.nextFloat();
     }
 
     public void play() {
