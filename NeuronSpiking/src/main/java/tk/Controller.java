@@ -33,6 +33,8 @@ public class Controller implements Initializable {
     RadioButton radioCzesto;
 
 
+    @FXML
+    LineChart<Number, Number> wyjscieWykres;
 
 
     @FXML
@@ -44,7 +46,7 @@ public class Controller implements Initializable {
     @FXML
     LineChart<Number, Number> input4LineChart;
     @FXML
-    LineChart<Number, Number> outputLineChart;
+    LineChart<Number, Number> membrana;
 
     public void initialize(URL location, ResourceBundle resources) {
         input1LineChart.setTitle("");
@@ -68,21 +70,27 @@ public class Controller implements Initializable {
     @FXML
     private NumberAxis xAxisLC4;
     @FXML
-    private NumberAxis xAxisLCOut;
+    private NumberAxis xAxisMembrana;
+    @FXML
+    private NumberAxis xAxisWyjscie;
+
+    float sumaWejsc = 0;// dla wejsc
+    float wyjscie = 0;
 
     XYChart.Series s1 = new XYChart.Series<Number, Number>();
 
     XYChart.Series s2 = new XYChart.Series<Number, Number>();
     XYChart.Series s3 = new XYChart.Series<Number, Number>();
     XYChart.Series s4 = new XYChart.Series<Number, Number>();
-    XYChart.Series sOut = new XYChart.Series<Number, Number>();
+    XYChart.Series sMembrana = new XYChart.Series<Number, Number>();
+    XYChart.Series sImpulsWyjscie = new XYChart.Series<Number, Number>();
     private Timeline animation;
 
     private double sequence = 0;
 
     private double y = 0;
 
-    private final int MAX_DATA_POINTS = 30, MAX = 1, MIN = 0;
+    private final int MAX_DATA_POINTS = 60, MAX = 1, MIN = 0;
 
     int[] tabDoLosowaniaCzesto = new int[4];
     int[] tabDoLosowaniaNormalnie = new int[4];
@@ -91,6 +99,7 @@ public class Controller implements Initializable {
     int[] impulsTab = new int[4]; // tablica z wylosowanymi impulsami 0 lub 1
     float[] waga = new float[4];
 
+    float sumaWagMembrana = 1;
 
     public Controller() {
 
@@ -103,7 +112,8 @@ public class Controller implements Initializable {
         xAxisLC2 = new NumberAxis(0, MAX_DATA_POINTS + 1, 2);
         xAxisLC3 = new NumberAxis(0, MAX_DATA_POINTS + 1, 2);
         xAxisLC4 = new NumberAxis(0, MAX_DATA_POINTS + 1, 2);
-        xAxisLCOut = new NumberAxis(0, MAX_DATA_POINTS + 1, 2);
+        xAxisMembrana = new NumberAxis(0, MAX_DATA_POINTS + 1, 2);
+        xAxisWyjscie = new NumberAxis(0, MAX_DATA_POINTS + 1, 2);
         final NumberAxis yAxis = new NumberAxis(MIN - 1, MAX + 1, 1);
 
         // setup chart
@@ -120,15 +130,20 @@ public class Controller implements Initializable {
         input4LineChart.setLegendVisible(false);
 
         // setup chart
-        outputLineChart.setAnimated(true);
-        outputLineChart.setLegendVisible(false);
+        membrana.setAnimated(true);
+        membrana.setLegendVisible(false);
+
+        wyjscieWykres.setAnimated(true);
+        wyjscieWykres.setLegendVisible(false);
 
         // xAxisLC1.setLabel("X Axis");
         xAxisLC1.setForceZeroInRange(false);
         xAxisLC2.setForceZeroInRange(false);
         xAxisLC3.setForceZeroInRange(false);
         xAxisLC4.setForceZeroInRange(false);
-        xAxisLCOut.setForceZeroInRange(false);
+        xAxisMembrana.setForceZeroInRange(false);
+        xAxisWyjscie.setForceZeroInRange(false);
+
 
         yAxis.setLabel("Y Axis");
         yAxis.setTickLabelFormatter(new NumberAxis.DefaultFormatter(yAxis, "$", null));
@@ -138,7 +153,8 @@ public class Controller implements Initializable {
         s2.getData().add(new XYChart.Data<Number, Number>(sequence, y));
         s3.getData().add(new XYChart.Data<Number, Number>(sequence, y));
         s4.getData().add(new XYChart.Data<Number, Number>(sequence, y));
-        sOut.getData().add(new XYChart.Data<Number, Number>(sequence, y));
+        sMembrana.getData().add(new XYChart.Data<Number, Number>(sequence, y));
+        sImpulsWyjscie.getData().add(new XYChart.Data<Number, Number>(sequence, y));
 
         // create some starting data
         input1LineChart.getData()
@@ -150,8 +166,10 @@ public class Controller implements Initializable {
         input4LineChart.getData()
                 .add(s4);
 
-        outputLineChart.getData()
-                .add(sOut);
+        membrana.getData()
+                .add(sMembrana);
+
+        wyjscieWykres.getData().add(sImpulsWyjscie);
 
 
     }
@@ -167,12 +185,29 @@ public class Controller implements Initializable {
         waga[1] = getNextWag();
         waga[2] = getNextWag();
         waga[3] = getNextWag();
-        s1.getData().add(new XYChart.Data<Number, Number>(sequence, (impulsTab[0]*waga[0])));
 
-        s2.getData().add(new XYChart.Data<Number, Number>(sequence, (impulsTab[1]*waga[1])));
-        s3.getData().add(new XYChart.Data<Number, Number>(sequence, (impulsTab[2]*waga[2])));
-        s4.getData().add(new XYChart.Data<Number, Number>(sequence, (impulsTab[3]*waga[3])));
-        sOut.getData().add(new XYChart.Data<Number, Number>(sequence, waga[3] + waga[0] + waga[1] + waga[2]));
+        sumaWagMembrana = sumaWagMembrana + ((waga[0] + waga[1] + waga[2] + waga[3]) / 3);
+        if (sumaWagMembrana >= 2.5) {
+            sumaWagMembrana = 2.5f;
+        }
+
+
+        wyjscie =0;
+
+        sumaWejsc = impulsTab[0] * waga[0] + impulsTab[1] * waga[1] + impulsTab[2] * waga[2] + impulsTab[3] * waga[3];
+        if (sumaWagMembrana <= sumaWejsc) {
+            sumaWagMembrana = 1f;
+            wyjscie = 1;
+        }
+
+
+        s1.getData().add(new XYChart.Data<Number, Number>(sequence, (impulsTab[0] * waga[0])));
+
+        s2.getData().add(new XYChart.Data<Number, Number>(sequence, (impulsTab[1] * waga[1])));
+        s3.getData().add(new XYChart.Data<Number, Number>(sequence, (impulsTab[2] * waga[2])));
+        s4.getData().add(new XYChart.Data<Number, Number>(sequence, (impulsTab[3] * waga[3])));
+        sMembrana.getData().add(new XYChart.Data<Number, Number>(sequence, sumaWagMembrana));
+        sImpulsWyjscie.getData().add(new XYChart.Data<Number, Number>(sequence, wyjscie));
 
         sequence++;
 
@@ -195,8 +230,8 @@ public class Controller implements Initializable {
             xAxisLC4.setLowerBound(xAxisLC4.getLowerBound() + 1);
             xAxisLC4.setUpperBound(xAxisLC4.getUpperBound() + 1);
 
-            xAxisLCOut.setLowerBound(xAxisLCOut.getLowerBound() + 1);
-            xAxisLCOut.setUpperBound(xAxisLCOut.getUpperBound() + 1);
+            xAxisMembrana.setLowerBound(xAxisMembrana.getLowerBound() + 1);
+            xAxisMembrana.setUpperBound(xAxisMembrana.getUpperBound() + 1);
         }
     }
 
@@ -205,36 +240,33 @@ public class Controller implements Initializable {
         return rand.nextInt(4);
     }
 
-    private int getWartImpulsu(){
+    private int getWartImpulsu() {
         int wynik;
         final ToggleGroup group = new ToggleGroup();
         radioCzesto.setToggleGroup(group);
         radioNormalnie.setToggleGroup(group);
         tabDoLosowaniaNormalnie[0] = 0;
-        tabDoLosowaniaNormalnie[1] = 0;
+        tabDoLosowaniaNormalnie[1] = 1;
         tabDoLosowaniaNormalnie[2] = 0;
-        tabDoLosowaniaNormalnie[3] = 0;
+        tabDoLosowaniaNormalnie[3] = 1;
 
         tabDoLosowaniaCzesto[0] = 0;
-        tabDoLosowaniaCzesto[1] =1;
-        tabDoLosowaniaCzesto[2] =1;
-        tabDoLosowaniaCzesto[3] =1;
+        tabDoLosowaniaCzesto[1] = 1;
+        tabDoLosowaniaCzesto[2] = 1;
+        tabDoLosowaniaCzesto[3] = 1;
 
 
-
-        if(radioNormalnie.isSelected())
-        {
+        if (radioNormalnie.isSelected()) {
             wynik = tabDoLosowaniaNormalnie[getNextValue()];
             return wynik;
-        }
-        else
-        {
+        } else {
+            radioCzesto.setSelected(true);
             wynik = tabDoLosowaniaCzesto[getNextValue()];
             return wynik;
         }
     }
 
-    private float getNextWag(){
+    private float getNextWag() {
         Random rand = new Random();
         return rand.nextFloat();
     }

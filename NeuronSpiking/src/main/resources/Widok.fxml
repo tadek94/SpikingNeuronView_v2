@@ -26,9 +26,9 @@
           <NumberAxis side="LEFT" />
         </yAxis>
       </LineChart>
-      <LineChart fx:id="outputLineChart" layoutX="693.0" layoutY="187.0" prefHeight="216.0" prefWidth="280.0">
+      <LineChart fx:id="membrana" layoutX="439.0" layoutY="395.0" prefHeight="203.0" prefWidth="300.0">
         <xAxis>
-          <NumberAxis side="BOTTOM" fx:id="xAxisLCOut" />
+          <NumberAxis side="BOTTOM" fx:id="xAxisMembrana" />
         </xAxis>
         <yAxis>
           <NumberAxis side="LEFT" />
@@ -61,5 +61,13 @@
       <RadioButton fx:id="radioNormalnie" layoutX="158.0" layoutY="33.0" mnemonicParsing="false" text="Normlanie 50%" />
       <Label layoutX="29.0" layoutY="24.0" text="Częstość impulsów" />
       <RadioButton fx:id="radioCzesto" layoutX="286.0" layoutY="33.0" mnemonicParsing="false" text="Często 75%" />
+      <LineChart fx:id="wyjscieWykres" layoutX="713.0" layoutY="192.0" prefHeight="203.0" prefWidth="248.0">
+        <xAxis>
+          <NumberAxis side="BOTTOM" fx:id="xAxisWyjscie" />
+        </xAxis>
+        <yAxis>
+          <NumberAxis side="LEFT" />
+        </yAxis>
+      </LineChart>
    </children>
 </Pane>
