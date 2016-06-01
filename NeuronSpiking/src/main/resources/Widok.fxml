@@ -8,9 +8,9 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="614.0" prefWidth="987.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tk.Controller">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="681.0" prefWidth="1099.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tk.Controller">
    <children>
-      <LineChart fx:id="input1LineChart" layoutX="11.0" layoutY="311.0" minHeight="100.0" minWidth="150.0" prefHeight="133.0" prefWidth="270.0">
+      <LineChart fx:id="input1LineChart" layoutX="16.0" layoutY="409.0" minHeight="100.0" minWidth="150.0" prefHeight="133.0" prefWidth="270.0">
         <xAxis>
           <NumberAxis side="BOTTOM" fx:id="xAxisLC1" />
         </xAxis>
@@ -18,7 +18,7 @@
           <NumberAxis side="LEFT" />
         </yAxis>
       </LineChart>
-      <LineChart fx:id="input2LineChart" layoutX="11.0" layoutY="444.0" minHeight="100.0" minWidth="150.0" prefHeight="133.0" prefWidth="270.0">
+      <LineChart fx:id="input2LineChart" layoutX="16.0" layoutY="542.0" minHeight="100.0" minWidth="150.0" prefHeight="133.0" prefWidth="270.0">
         <xAxis>
           <NumberAxis side="BOTTOM" fx:id="xAxisLC2" />
         </xAxis>
@@ -26,7 +26,7 @@
           <NumberAxis side="LEFT" />
         </yAxis>
       </LineChart>
-      <LineChart fx:id="membrana" layoutX="439.0" layoutY="395.0" prefHeight="203.0" prefWidth="300.0">
+      <LineChart fx:id="membrana" layoutX="440.0" layoutY="467.0" prefHeight="203.0" prefWidth="300.0">
         <xAxis>
           <NumberAxis side="BOTTOM" fx:id="xAxisMembrana" />
         </xAxis>
@@ -34,7 +34,7 @@
           <NumberAxis side="LEFT" />
         </yAxis>
       </LineChart>
-      <LineChart fx:id="input4LineChart" layoutX="11.0" layoutY="192.0" minHeight="100.0" minWidth="150.0" prefHeight="119.0" prefWidth="272.0">
+      <LineChart fx:id="input4LineChart" layoutX="16.0" layoutY="290.0" minHeight="100.0" minWidth="150.0" prefHeight="119.0" prefWidth="272.0">
          <xAxis>
             <NumberAxis side="BOTTOM" fx:id="xAxisLC4" />
          </xAxis>
@@ -42,7 +42,7 @@
             <NumberAxis side="LEFT" />
          </yAxis>
       </LineChart>
-      <LineChart fx:id="input3LineChart" layoutX="8.0" layoutY="62.0" minHeight="100.0" minWidth="150.0" prefHeight="133.0" prefWidth="280.0">
+      <LineChart fx:id="input3LineChart" layoutX="13.0" layoutY="160.0" minHeight="100.0" minWidth="150.0" prefHeight="133.0" prefWidth="280.0">
          <xAxis>
             <NumberAxis side="BOTTOM" fx:id="xAxisLC3" />
          </xAxis>
@@ -50,18 +50,21 @@
             <NumberAxis side="LEFT" />
          </yAxis>
       </LineChart>
-      <Circle fill="DODGERBLUE" layoutX="570.0" layoutY="291.0" radius="66.0" stroke="BLACK" strokeType="INSIDE" />
-      <Line endX="100.0" layoutX="423.0" layoutY="163.0" rotate="35.0" startX="-100.0" />
-      <Line endX="80.0" layoutX="406.0" layoutY="230.0" rotate="15.0" startX="-100.0" />
-      <Line endX="75.0" layoutX="406.0" layoutY="324.0" rotate="-15.0" startX="-100.0" />
-      <Line endX="110.0" layoutX="399.0" layoutY="405.0" rotate="-35.0" startX="-100.0" />
-      <Label layoutX="540.0" layoutY="195.0" prefHeight="0.0" prefWidth="67.0" text="Neuron" />
-      <Text layoutX="642.0" layoutY="282.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Wyjście" />
-      <Line layoutX="695.0" layoutY="294.0" startX="-50.0" />
-      <RadioButton fx:id="radioNormalnie" layoutX="158.0" layoutY="33.0" mnemonicParsing="false" text="Normlanie 50%" />
-      <Label layoutX="29.0" layoutY="24.0" text="Częstość impulsów" />
-      <RadioButton fx:id="radioCzesto" layoutX="286.0" layoutY="33.0" mnemonicParsing="false" text="Często 75%" />
-      <LineChart fx:id="wyjscieWykres" layoutX="713.0" layoutY="192.0" prefHeight="203.0" prefWidth="248.0">
+      <Circle fill="DODGERBLUE" layoutX="574.0" layoutY="400.0" radius="66.0" stroke="BLACK" strokeType="INSIDE" />
+      <Line endX="100.0" layoutX="396.0" layoutY="269.0" rotate="35.0" startX="-100.0" />
+      <Line endX="80.0" layoutX="398.0" layoutY="349.0" rotate="15.0" startX="-100.0" />
+      <Line endX="75.0" layoutX="397.0" layoutY="449.0" rotate="-15.0" startX="-100.0" />
+      <Line endX="110.0" layoutX="383.0" layoutY="519.0" rotate="-35.0" startX="-100.0" />
+      <Label layoutX="538.0" layoutY="299.0" prefHeight="0.0" prefWidth="67.0" text="Neuron" />
+      <Text layoutX="661.0" layoutY="396.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Wyjście" />
+      <Line layoutX="706.0" layoutY="405.0" startX="-50.0" />
+      <RadioButton fx:id="radioNormalnie" layoutX="20.0" layoutY="105.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="115.0" text="Normalnie 50%" />
+      <Label layoutX="27.0" layoutY="55.0" text="Częstość impulsów">
+         <font>
+            <Font size="18.0" />
+         </font></Label>
+      <RadioButton fx:id="radioCzesto" layoutX="20.0" layoutY="131.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="90.0" text="Często 75%" />
+      <LineChart fx:id="wyjscieWykres" layoutX="732.0" layoutY="303.0" prefHeight="203.0" prefWidth="341.0">
         <xAxis>
           <NumberAxis side="BOTTOM" fx:id="xAxisWyjscie" />
         </xAxis>
@@ -69,5 +72,22 @@
           <NumberAxis side="LEFT" />
         </yAxis>
       </LineChart>
+      <Button fx:id="przyciskStart" layoutX="248.0" layoutY="57.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="130.0" text="Start" />
+      <Button fx:id="przyciskStop" layoutX="473.0" layoutY="57.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="130.0" text="Stop" />
+      <RadioButton fx:id="radioRzadko" layoutX="20.0" layoutY="80.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="90.0" text="Rzadko 30%" />
+      <TextField fx:id="textFieldWaga1" layoutX="368.0" layoutY="214.0" prefHeight="25.0" prefWidth="57.0" />
+      <TextField fx:id="textFieldWaga2" layoutX="368.0" layoutY="313.0" prefHeight="25.0" prefWidth="57.0" />
+      <TextField fx:id="textFieldWaga3" layoutX="368.0" layoutY="413.0" prefHeight="25.0" prefWidth="57.0" />
+      <TextField fx:id="textFieldWaga4" layoutX="368.0" layoutY="463.0" prefHeight="25.0" prefWidth="57.0" />
+      <Label layoutX="368.0" layoutY="160.0" prefHeight="47.0" prefWidth="57.0" text="Wagi:">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="271.0" layoutY="14.0" text="Symulator działania Neuronu">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
    </children>
 </Pane>

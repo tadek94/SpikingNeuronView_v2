@@ -9,9 +9,14 @@ import javafx.fxml.Initializable;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
+import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.util.Duration;
+
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 
 import java.net.URL;
 import java.util.Random;
@@ -27,10 +32,22 @@ import java.util.ResourceBundle;
 public class Controller implements Initializable {
 
     @FXML
+    TextField textFieldWaga1;
+    @FXML
+    TextField textFieldWaga2;
+    @FXML
+    TextField textFieldWaga3;
+    @FXML
+    TextField textFieldWaga4;
+
+    @FXML
     RadioButton radioNormalnie;
 
     @FXML
     RadioButton radioCzesto;
+
+    @FXML
+    RadioButton radioRzadko;
 
 
     @FXML
@@ -48,6 +65,11 @@ public class Controller implements Initializable {
     @FXML
     LineChart<Number, Number> membrana;
 
+    @FXML
+    Button przyciskStart;
+    @FXML
+    Button przyciskStop;
+
     public void initialize(URL location, ResourceBundle resources) {
         input1LineChart.setTitle("");
         animation = new Timeline();
@@ -56,9 +78,24 @@ public class Controller implements Initializable {
                         (ActionEvent actionEvent) -> plotTime()));
         animation.setCycleCount(Animation.INDEFINITE);
         createContent();
-        play();
+
+        przyciskStart.setOnAction(new javafx.event.EventHandler<ActionEvent>() {
+            public void handle(ActionEvent event) {
+                play();
+            }
+        });
+
+        przyciskStop.setOnAction(new javafx.event.EventHandler<ActionEvent>() {
+            public void handle(ActionEvent event) {
+                stop();
+            }
+        });
+
 
     }
+
+    Los los = new Los();
+
 
     @FXML
     private NumberAxis xAxisLC1;
@@ -90,16 +127,13 @@ public class Controller implements Initializable {
 
     private double y = 0;
 
-    private final int MAX_DATA_POINTS = 60, MAX = 1, MIN = 0;
-
-    int[] tabDoLosowaniaCzesto = new int[4];
-    int[] tabDoLosowaniaNormalnie = new int[4];
+    private final int MAX_DATA_POINTS = 600, MAX = 1, MIN = 0;
 
 
     int[] impulsTab = new int[4]; // tablica z wylosowanymi impulsami 0 lub 1
     float[] waga = new float[4];
 
-    float sumaWagMembrana = 1;
+    float sumaWagMembrana = 1.7f;
 
     public Controller() {
 
@@ -174,38 +208,54 @@ public class Controller implements Initializable {
 
     }
 
+    private void wypiszWagi() {
+        String wagaString1, wagaString2, wagaString3, wagaString4;
+
+        wagaString1 = Float.toString(waga[0]);
+        wagaString2 = Float.toString(waga[1]);
+        wagaString3 = Float.toString(waga[2]);
+        wagaString4 = Float.toString(waga[3]);
+
+
+        textFieldWaga1.setText(wagaString1);
+        textFieldWaga2.setText(wagaString2);
+        textFieldWaga3.setText(wagaString3);
+        textFieldWaga4.setText(wagaString4);
+
+
+    }
+
 
     private void plotTime() {
-        impulsTab[0] = getWartImpulsu();
-        impulsTab[1] = getWartImpulsu();
-        impulsTab[2] = getWartImpulsu();
-        impulsTab[3] = getWartImpulsu();
+        for (int i = 0; i < 4; i++)
+            impulsTab[i] = getWartImpulsu();
 
-        waga[0] = getNextWag();
-        waga[1] = getNextWag();
-        waga[2] = getNextWag();
-        waga[3] = getNextWag();
 
-        sumaWagMembrana = sumaWagMembrana + ((waga[0] + waga[1] + waga[2] + waga[3]) / 3);
-        if (sumaWagMembrana >= 2.5) {
-            sumaWagMembrana = 2.5f;
+        waga = los.losujTabWag();
+
+
+        sumaWagMembrana += (los.sumaNaMembranie(waga)) / 6;
+
+        if (sumaWagMembrana >= 3.8) {
+            sumaWagMembrana = 3.85f;
         }
 
 
-        wyjscie =0;
+        wyjscie = 0;
 
-        sumaWejsc = impulsTab[0] * waga[0] + impulsTab[1] * waga[1] + impulsTab[2] * waga[2] + impulsTab[3] * waga[3];
+        sumaWejsc = impulsTab[0] + impulsTab[1] + impulsTab[2] + impulsTab[3];//moze byc razy waga
         if (sumaWagMembrana <= sumaWejsc) {
-            sumaWagMembrana = 1f;
+            sumaWagMembrana = 1.75f;
             wyjscie = 1;
         }
 
+        wypiszWagi();
 
-        s1.getData().add(new XYChart.Data<Number, Number>(sequence, (impulsTab[0] * waga[0])));
+        s1.getData().add(new XYChart.Data<Number, Number>(sequence, (impulsTab[0])));
 
-        s2.getData().add(new XYChart.Data<Number, Number>(sequence, (impulsTab[1] * waga[1])));
-        s3.getData().add(new XYChart.Data<Number, Number>(sequence, (impulsTab[2] * waga[2])));
-        s4.getData().add(new XYChart.Data<Number, Number>(sequence, (impulsTab[3] * waga[3])));
+        s2.getData().add(new XYChart.Data<Number, Number>(sequence, (impulsTab[1])));
+        s3.getData().add(new XYChart.Data<Number, Number>(sequence, (impulsTab[2])));
+        s4.getData().add(new XYChart.Data<Number, Number>(sequence, (impulsTab[3])));
         sMembrana.getData().add(new XYChart.Data<Number, Number>(sequence, sumaWagMembrana));
         sImpulsWyjscie.getData().add(new XYChart.Data<Number, Number>(sequence, wyjscie));
 
@@ -235,43 +285,34 @@ public class Controller implements Initializable {
         }
     }
 
-    private int getNextValue() {
-        Random rand = new Random();
-        return rand.nextInt(4);
-    }
 
     private int getWartImpulsu() {
         int wynik;
         final ToggleGroup group = new ToggleGroup();
         radioCzesto.setToggleGroup(group);
         radioNormalnie.setToggleGroup(group);
-        tabDoLosowaniaNormalnie[0] = 0;
-        tabDoLosowaniaNormalnie[1] = 1;
-        tabDoLosowaniaNormalnie[2] = 0;
-        tabDoLosowaniaNormalnie[3] = 1;
+        radioRzadko.setToggleGroup(group);
+        if (radioRzadko.isSelected()) {
 
-        tabDoLosowaniaCzesto[0] = 0;
-        tabDoLosowaniaCzesto[1] = 1;
-        tabDoLosowaniaCzesto[2] = 1;
-        tabDoLosowaniaCzesto[3] = 1;
-
-
+            sumaWagMembrana = sumaWagMembrana - 0.09f;
+            wynik = los.getWartImpulsuRzadko();
+            return wynik;
+        }
         if (radioNormalnie.isSelected()) {
-            wynik = tabDoLosowaniaNormalnie[getNextValue()];
+
+            wynik = los.getWartImpulsuNorm();
             return wynik;
         } else {
             radioCzesto.setSelected(true);
-            wynik = tabDoLosowaniaCzesto[getNextValue()];
+            wynik = los.getWartImpulsuCzesto();
             return wynik;
         }
     }
 
-    private float getNextWag() {
-        Random rand = new Random();
-        return rand.nextFloat();
-    }
 
     public void play() {
+
+
         animation.play();
     }
 
